@@ -1,0 +1,6 @@
+C:\lcmc\lcmc\lcmc\bin\Debug\lcmc.exe.config
+C:\lcmc\lcmc\lcmc\bin\Debug\lcmc.exe
+C:\lcmc\lcmc\lcmc\bin\Debug\lcmc.pdb
+C:\lcmc\lcmc\lcmc\obj\Debug\lcmc.csprojAssemblyReference.cache
+C:\lcmc\lcmc\lcmc\obj\Debug\lcmc.exe
+C:\lcmc\lcmc\lcmc\obj\Debug\lcmc.pdb
