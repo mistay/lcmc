@@ -92,6 +92,7 @@ namespace lcmc
             // Get the socket that handles the client request.  
             Socket listener = (Socket)ar.AsyncState;
             Socket handler = listener.EndAccept(ar);
+            handler.NoDelay = true;
 
             // Signal the main thread to continue.  
             //allDone.Set();
@@ -110,11 +111,13 @@ namespace lcmc
         {
             StateObject state = (StateObject)ar.AsyncState;
             Socket handler = state.workSocket;
+            handler.NoDelay = true;
+
 
             int read = handler.EndReceive(ar);
-            Console.WriteLine("received {0} bytes from port: {1}",
-                        read,
-                        ((IPEndPoint)state.workSocket.LocalEndPoint).Port
+            Console.Write("{0} {1} bytes",
+                        ((IPEndPoint)state.workSocket.LocalEndPoint).Port == 11000 ? "-P->" : "<-A-",
+                        read
                         );
 
             handler.BeginReceive(state.buffer, 0, StateObject.BufferSize, 0,
@@ -131,12 +134,9 @@ namespace lcmc
                     )
                 {
                     // found corresponding stateobject
-                    Console.WriteLine("sending {0} bytes to port: {1}",
-                        read,
-                        ((IPEndPoint)s.workSocket.LocalEndPoint).Port
-                        );
+                    Console.WriteLine(".");
 
-
+                    s.workSocket.NoDelay = true;
                     s.workSocket.Send(state.buffer, read, SocketFlags.None);
                     break;
                 }
