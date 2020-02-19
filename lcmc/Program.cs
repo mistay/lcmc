@@ -102,6 +102,8 @@ namespace lcmc
             state.workSocket = handler;
             handler.BeginReceive(state.buffer, 0, StateObject.BufferSize, 0,
                 new AsyncCallback(ReadCallback), state);
+
+            Console.WriteLine("client connected to port: {0}", ((IPEndPoint)handler.LocalEndPoint).Port);
         }
 
         public static void ReadCallback(IAsyncResult ar)
@@ -110,6 +112,11 @@ namespace lcmc
             Socket handler = state.workSocket;
 
             int read = handler.EndReceive(ar);
+            Console.WriteLine("received {0} bytes from port: {1}",
+                        read,
+                        ((IPEndPoint)state.workSocket.LocalEndPoint).Port
+                        );
+
             handler.BeginReceive(state.buffer, 0, StateObject.BufferSize, 0,
                 new AsyncCallback(ReadCallback), state);
 
@@ -124,8 +131,9 @@ namespace lcmc
                     )
                 {
                     // found corresponding stateobject
-                    Console.WriteLine("sending {0} bytes",
-                        read
+                    Console.WriteLine("sending {0} bytes to port: {1}",
+                        read,
+                        ((IPEndPoint)s.workSocket.LocalEndPoint).Port
                         );
 
 
